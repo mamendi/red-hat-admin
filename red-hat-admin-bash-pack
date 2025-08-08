@@ -1,0 +1,66 @@
+#############################
+# Red Hat Admin Bash Pack
+#############################
+
+### ====== COLORIZED & SAFE FILE COMMANDS ======
+alias ls='ls --color=always'
+alias ll='ls -lh --color=always'
+alias la='ls -lha --color=always'
+alias l.='ls -d .* --color=always'
+alias cp='cp -i'    # prompt before overwrite
+alias mv='mv -i'    # prompt before overwrite
+alias rm='rm -i'    # prompt before delete
+
+### ====== DISK & MEMORY SHORTCUTS ======
+alias df='df -hT'                    # human-readable + FS type
+alias du='du -h --max-depth=1'        # dir sizes
+alias meminfo='free -h'               # memory usage
+alias cpuinfo='lscpu'                 # CPU info
+alias topcpu='ps -eo pid,ppid,cmd,%mem,%cpu --sort=-%cpu | head'  # top CPU processes
+
+### ====== NAVIGATION ======
+alias ..='cd ..'
+alias ...='cd ../..'
+alias ....='cd ../../..'
+
+### ====== NETWORKING ======
+alias myip='hostname -I | awk "{print \$1}"'
+alias ports='ss -tuln'
+alias listen='ss -lntp'
+
+### ====== GREP ======
+alias grep='grep --color=auto'
+alias egrep='egrep --color=auto'
+alias fgrep='fgrep --color=auto'
+
+### ====== PACKAGE MANAGEMENT ======
+alias update='sudo dnf upgrade --refresh -y'
+alias install='sudo dnf install'
+alias remove='sudo dnf remove'
+alias searchpkg='dnf search'
+
+### ====== SERVICE MANAGEMENT ======
+alias start='sudo systemctl start'
+alias stop='sudo systemctl stop'
+alias restart='sudo systemctl restart'
+alias status='systemctl status'
+
+### ====== LOG VIEWERS ======
+logtail() { sudo tail -f /var/log/"$1"; }    # usage: logtail secure
+loggrep() { sudo grep -i "$1" /var/log/"$2"; } # usage: loggrep error messages
+
+### ====== MONITORING HELPERS ======
+sysmon() {
+    echo "===== CPU & Memory ====="
+    top -b -n1 | head -15
+    echo
+    echo "===== Disk Usage ====="
+    df -hT
+    echo
+    echo "===== Network Connections ====="
+    ss -tuln
+}
+
+### ====== QUICK TROUBLESHOOT ======
+findbig() { sudo du -ah / | sort -rh | head -n 20; } # largest files/dirs
+servicelog() { sudo journalctl -u "$1" -n 50 --no-pager; } # last 50 lines of a service log
