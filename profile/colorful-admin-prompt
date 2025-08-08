@@ -1,0 +1,20 @@
+# add this to ~/.bashrc after aliases:
+
+# Color codes
+RED="\[\033[0;31m\]"
+GREEN="\[\033[0;32m\]"
+YELLOW="\[\033[0;33m\]"
+BLUE="\[\033[0;34m\]"
+RESET="\[\033[0m\]"
+
+# Git branch function
+parse_git_branch() {
+    git branch 2>/dev/null | sed -n '/\* /s///p'
+}
+
+# Custom prompt
+if [[ $EUID -ne 0 ]]; then
+    PS1="${GREEN}\u@\h${YELLOW} \w${BLUE} \$(parse_git_branch)${RESET}\$ "
+else
+    PS1="${RED}\u@\h${YELLOW} \w${BLUE} \$(parse_git_branch)${RESET}# "
+fi
