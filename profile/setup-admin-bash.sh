@@ -2,6 +2,10 @@
 # Red Hat Admin Bash Pack Installer
 # Works on RHEL, Rocky, Alma, CentOS
 
+# ======= To Execute: =======
+# chmod +x setup_admin_bash.sh
+# ./setup_admin_bash.sh
+
 BASHRC="$HOME/.bashrc"
 BACKUP="$HOME/.bashrc.backup.$(date +%F-%H%M%S)"
 
